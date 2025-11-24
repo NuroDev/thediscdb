@@ -3,6 +3,7 @@ import Layout from '~/layouts/Layout.astro';
 import MediaCard from '~/components/MediaCard.astro';
 import Pagination from '~/components/Pagination.astro';
 import SortControls from '~/components/SortControls.astro';
+import GenreFilter from '~/components/GenreFilter.astro';
 import { query } from '~/graphql';
 
 const cursor = Astro.url.searchParams.get('cursor');
@@ -10,6 +11,7 @@ const direction = Astro.url.searchParams.get('direction');
 const searchQuery = Astro.url.searchParams.get('q') || '';
 const sortBy = Astro.url.searchParams.get('sort') || 'latestReleaseDate';
 const sortDirection = Astro.url.searchParams.get('dir') || 'DESC';
+const genreFilter = Astro.url.searchParams.get('genre') || '';
 
 const { mediaItems } = await query.GetAllMovies({
 	after: direction === 'next' ? cursor : undefined,
@@ -23,6 +25,9 @@ const { mediaItems } = await query.GetAllMovies({
 		type: { eq: 'Movie' },
 		...(searchQuery && {
 			title: { contains: searchQuery }
+		}),
+		...(genreFilter && {
+			genres: { contains: genreFilter }
 		})
 	},
 });
@@ -38,12 +43,22 @@ Astro.response.headers.set('Cache-Control', 'public, s-maxage=60, stale-while-re
 	description="Browse the complete catalog of movies available on physical media including Blu-ray, 4K UHD, and DVD"
 >
 	<div class="max-w-7xl mx-auto">
-		<SortControls
-			currentPath="/movies"
-			direction={sortDirection}
-			searchQuery={searchQuery}
-			sortBy={sortBy}
-		/>
+		<div class="mb-8 flex gap-2 justify-end">
+			<GenreFilter
+				currentPath="/movies"
+				genre={genreFilter}
+				searchQuery={searchQuery}
+				sortBy={sortBy}
+				sortDirection={sortDirection}
+			/>
+			<SortControls
+				currentPath="/movies"
+				direction={sortDirection}
+				searchQuery={searchQuery}
+				sortBy={sortBy}
+				genre={genreFilter}
+			/>
+		</div>
 
 		{items.length === 0 ? (
 			<div class="text-center py-12 text-zinc-600 dark:text-zinc-400">

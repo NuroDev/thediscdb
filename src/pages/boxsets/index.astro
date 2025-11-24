@@ -51,17 +51,19 @@ Astro.response.headers.set('Cache-Control', 'public, s-maxage=60, stale-while-re
 	description="Browse the complete catalog of movie and TV boxsets available on physical media including Blu-ray, 4K UHD, and DVD"
 >
 	<div class="max-w-7xl mx-auto">
-		<SortControls
-			currentPath="/boxsets"
-			direction={sortDirection}
-			searchQuery={searchQuery}
-			sortBy={sortBy}
-			sortOptions={[
-				{ value: 'dateAdded', label: 'Date Added' },
-				{ value: 'releaseDate', label: 'Release Date' },
-				{ value: 'title', label: 'Title' },
-			]}
-		/>
+		<div class="mb-8 flex gap-2 justify-end">
+			<SortControls
+				currentPath="/boxsets"
+				direction={sortDirection}
+				searchQuery={searchQuery}
+				sortBy={sortBy}
+				sortOptions={[
+					{ value: 'dateAdded', label: 'Date Added' },
+					{ value: 'releaseDate', label: 'Release Date' },
+					{ value: 'title', label: 'Title' },
+				]}
+			/>
+		</div>
 
 		{items.length === 0 ? (
 			<div class="text-center py-12 text-zinc-600 dark:text-zinc-400">

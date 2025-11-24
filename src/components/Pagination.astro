@@ -22,10 +22,12 @@ const getPaginationUrl = (cursor: string | null | undefined, direction: 'next' |
 
 	const url = new URL(currentPath, Astro.url.origin);
 
+	const genre = Astro.url.searchParams.get('genre');
 	const searchQuery = Astro.url.searchParams.get('q');
 	const sortBy = Astro.url.searchParams.get('sort');
 	const sortDirection = Astro.url.searchParams.get('dir');
 
+	if (genre) url.searchParams.set('genre', genre);
 	if (searchQuery) url.searchParams.set('q', searchQuery);
 	if (sortBy) url.searchParams.set('sort', sortBy);
 	if (sortDirection) url.searchParams.set('dir', sortDirection);

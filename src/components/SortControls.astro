@@ -4,6 +4,7 @@ import { ArrowUpAZ, ArrowDownAZ } from 'lucide-astro';
 interface Props {
 	currentPath: string;
 	direction?: string;
+	genre?: string;
 	searchQuery?: string;
 	sortBy?: string;
 	sortOptions?: Array<{
@@ -15,6 +16,7 @@ interface Props {
 const {
 	currentPath,
 	direction = 'DESC',
+	genre = '',
 	searchQuery = '',
 	sortBy = 'latestReleaseDate',
 	sortOptions = [
@@ -26,9 +28,10 @@ const {
 } = Astro.props;
 ---
 
-<div class="mb-8 flex gap-2 justify-end">
+<div class="flex gap-2">
 	<form method="get" action={currentPath} class="flex-1 sm:flex-none sm:w-48">
 		{searchQuery && <input type="hidden" name="q" value={searchQuery} />}
+		{genre && <input type="hidden" name="genre" value={genre} />}
 		<input type="hidden" name="dir" value={direction} />
 
 		<select
@@ -46,6 +49,7 @@ const {
 
 	<form method="get" action={currentPath}>
 		{searchQuery && <input type="hidden" name="q" value={searchQuery} />}
+		{genre && <input type="hidden" name="genre" value={genre} />}
 		<input type="hidden" name="sort" value={sortBy} />
 		<input type="hidden" name="dir" value={direction === 'DESC' ? 'ASC' : 'DESC'} />
 

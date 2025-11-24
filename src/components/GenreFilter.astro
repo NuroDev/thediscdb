@@ -1,0 +1,56 @@
+---
+interface Props {
+	currentPath: string;
+	genre?: string;
+	searchQuery?: string;
+	sortBy?: string;
+	sortDirection?: string;
+	genres?: string[];
+}
+
+const {
+	currentPath,
+	genre = '',
+	genres = [
+		'Action',
+		'Adventure',
+		'Animation',
+		'Comedy',
+		'Crime',
+		'Documentary',
+		'Drama',
+		'Family',
+		'Fantasy',
+		'Horror',
+		'Music',
+		'Mystery',
+		'Romance',
+		'Science Fiction',
+		'Thriller',
+		'War',
+		'Western',
+	],
+	searchQuery = '',
+	sortBy,
+	sortDirection,
+} = Astro.props;
+---
+
+<form method="get" action={currentPath} class="flex-1 sm:flex-none sm:w-48">
+	{searchQuery && <input type="hidden" name="q" value={searchQuery} />}
+	{sortBy && <input type="hidden" name="sort" value={sortBy} />}
+	{sortDirection && <input type="hidden" name="dir" value={sortDirection} />}
+
+	<select
+		class="w-full h-full px-4 py-2 rounded-md bg-white dark:bg-zinc-950 border border-zinc-300 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 default-focus default-transition"
+		name="genre"
+		onchange="this.form.submit()"
+	>
+		<option value="" selected={!genre}>All Genres</option>
+		{genres.map((g) => (
+			<option value={g} selected={genre === g}>
+				{g}
+			</option>
+		))}
+	</select>
+</form>
