@@ -1,0 +1,79 @@
+---
+import Layout from '~/layouts/Layout.astro';
+import MediaCard from '~/components/MediaCard.astro';
+import Pagination from '~/components/Pagination.astro';
+import SortControls from '~/components/SortControls.astro';
+import { query } from '~/graphql';
+
+const cursor = Astro.url.searchParams.get('cursor');
+const direction = Astro.url.searchParams.get('direction');
+const searchQuery = Astro.url.searchParams.get('q') || '';
+const sortBy = Astro.url.searchParams.get('sort') || 'latestReleaseDate';
+const sortDirection = Astro.url.searchParams.get('dir') || 'DESC';
+
+const { mediaItems } = await query.GetAllMovies({
+	after: direction === 'next' ? cursor : undefined,
+	before: direction === 'prev' ? cursor : undefined,
+	first: direction === 'prev' ? undefined : 48,
+	last: direction === 'prev' ? 24 : undefined,
+	order: [
+		{ [sortBy]: sortDirection }
+	],
+	where: {
+		type: { eq: 'Movie' },
+		...(searchQuery && {
+			title: { contains: searchQuery }
+		})
+	},
+});
+
+const items = mediaItems?.edges?.map(edge => edge.node) ?? [];
+const pageInfo = mediaItems?.pageInfo;
+
+Astro.response.headers.set('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=30');
+---
+
+<Layout
+	title="Movies - TheDiscDB"
+	description="Browse the complete catalog of movies available on physical media including Blu-ray, 4K UHD, and DVD"
+>
+	<div class="max-w-7xl mx-auto">
+		<SortControls
+			currentPath="/movies"
+			direction={sortDirection}
+			searchQuery={searchQuery}
+			sortBy={sortBy}
+		/>
+
+		{items.length === 0 ? (
+			<div class="text-center py-12 text-zinc-600 dark:text-zinc-400">
+				No movies found
+			</div>
+		) : (
+			<>
+				<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
+					{items.map((item) => (
+						<MediaCard
+							title={item.title ?? 'Untitled'}
+							slug={item.slug ?? ''}
+							imageUrl={item.imageUrl}
+							year={item.year}
+							contentRating={item.contentRating}
+							type="movie"
+						/>
+					))}
+				</div>
+
+				{pageInfo && (
+					<Pagination
+						hasNextPage={pageInfo.hasNextPage}
+						hasPreviousPage={pageInfo.hasPreviousPage}
+						startCursor={pageInfo.startCursor}
+						endCursor={pageInfo.endCursor}
+						currentPath="/movies"
+					/>
+				)}
+			</>
+		)}
+	</div>
+</Layout>

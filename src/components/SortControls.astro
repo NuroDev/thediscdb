@@ -1,0 +1,64 @@
+---
+import { ArrowUpAZ, ArrowDownAZ } from 'lucide-astro';
+
+interface Props {
+	currentPath: string;
+	direction?: string;
+	searchQuery?: string;
+	sortBy?: string;
+	sortOptions?: Array<{
+		label: string;
+		value: string;
+	}>;
+}
+
+const {
+	currentPath,
+	direction = 'DESC',
+	searchQuery = '',
+	sortBy = 'latestReleaseDate',
+	sortOptions = [
+		{ value: 'latestReleaseDate', label: 'Latest Release' },
+		{ value: 'dateAdded', label: 'Date Added' },
+		{ value: 'releaseDate', label: 'Release Date' },
+		{ value: 'title', label: 'Title' },
+	],
+} = Astro.props;
+---
+
+<div class="mb-8 flex gap-2 justify-end">
+	<form method="get" action={currentPath} class="flex-1 sm:flex-none sm:w-48">
+		{searchQuery && <input type="hidden" name="q" value={searchQuery} />}
+		<input type="hidden" name="dir" value={direction} />
+
+		<select
+			class="w-full h-full px-4 py-2 rounded-md bg-white dark:bg-zinc-950 border border-zinc-300 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 default-focus default-transition"
+			name="sort"
+			onchange="this.form.submit()"
+		>
+			{sortOptions.map((option) => (
+				<option value={option.value} selected={sortBy === option.value}>
+					{option.label}
+				</option>
+			))}
+		</select>
+	</form>
+
+	<form method="get" action={currentPath}>
+		{searchQuery && <input type="hidden" name="q" value={searchQuery} />}
+		<input type="hidden" name="sort" value={sortBy} />
+		<input type="hidden" name="dir" value={direction === 'DESC' ? 'ASC' : 'DESC'} />
+
+		<button
+			class="shrink-0 h-full px-3 py-2 rounded-md bg-white dark:bg-zinc-950 border border-zinc-300 dark:border-zinc-800 text-zinc-900 dark:text-zinc-100 default-focus default-transition hover:bg-zinc-50 dark:hover:bg-zinc-900 cursor-pointer"
+			title={direction === 'DESC' ? 'Sort Descending' : 'Sort Ascending'}
+			type="submit"
+		>
+			{direction === 'DESC' ? (
+				<ArrowDownAZ class="w-5 h-5" />
+			) : (
+				<ArrowUpAZ class="w-5 h-5" />
+			)}
+		</button>
+	</form>
+</div>

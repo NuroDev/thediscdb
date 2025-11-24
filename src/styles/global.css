@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+@custom-variant dark (@media (prefers-color-scheme: dark));
+
+@utility default-focus {
+  @apply focus:outline-hidden focus:ring-3 focus:ring-blue-500 dark:focus:ring-blue-600 focus:ring-offset-2 dark:focus:ring-offset-zinc-950;
+}
+
+@utility default-transition {
+  @apply transition duration-300 ease-in-out;
+}
+
+@utility image-container {
+  @apply relative;
+
+  &::before {
+    @apply content-[''] absolute inset-0 bg-zinc-200 dark:bg-zinc-800 animate-pulse z-0;
+  }
+
+  & > img {
+    @apply relative z-10;
+  }
+}

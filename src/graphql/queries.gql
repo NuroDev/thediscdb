@@ -1,0 +1,303 @@
+query GetAllMovies($first: Int, $after: String, $last: Int, $before: String, $where: MediaItemFilterInput, $order: [MediaItemSortInput!]) {
+	mediaItems(
+		first: $first,
+		after: $after,
+		last: $last,
+		before: $before,
+		where: $where
+		order: $order
+	) {
+		edges {
+			node {
+				contentRating
+				dateAdded
+				directors
+				genres
+				id
+				imageUrl
+				latestReleaseDate
+				plot
+				releaseDate
+				runtimeMinutes
+				slug
+				stars
+				tagline
+				title
+				type
+				year
+			}
+		}
+		pageInfo {
+			endCursor
+			hasNextPage
+			hasPreviousPage
+			startCursor
+		}
+	}
+}
+
+query GetAllSeries($first: Int, $after: String, $last: Int, $before: String, $where: MediaItemFilterInput, $order: [MediaItemSortInput!]) {
+	mediaItems(
+		first: $first,
+		after: $after,
+		last: $last,
+		before: $before,
+		where: $where
+		order: $order
+	) {
+		edges {
+			node {
+				contentRating
+				dateAdded
+				directors
+				genres
+				id
+				imageUrl
+				latestReleaseDate
+				plot
+				releaseDate
+				runtimeMinutes
+				slug
+				stars
+				tagline
+				title
+				type
+				year
+			}
+		}
+		pageInfo {
+			endCursor
+			hasNextPage
+			hasPreviousPage
+			startCursor
+		}
+	}
+}
+
+query GetMovieBySlug($slug: String!) {
+	mediaItems(
+		where: { slug: { eq: $slug }, type: { eq: "Movie" } }
+	) {
+		edges {
+			node {
+				contentRating
+				dateAdded
+				directors
+				externalids {
+					imdb
+					tmdb
+					tvdb
+				}
+				genres
+				id
+				imageUrl
+				latestReleaseDate
+				plot
+				releaseDate
+				releases {
+					upc
+					isbn
+					asin
+					title
+					imageUrl
+					regionCode
+					locale
+					year
+					discs {
+						id
+						index
+						name
+						format
+						slug
+						titles {
+							id
+							index
+							comment
+							duration
+							displaySize
+							description
+							itemType
+							hasItem
+							item {
+								title
+								season
+								episode
+								type
+							}
+							sourceFile
+							season
+							episode
+							segmentMap
+							size
+						}
+					}
+				}
+				runtimeMinutes
+				slug
+				stars
+				tagline
+				title
+				type
+				writers
+				year
+			}
+		}
+	}
+}
+
+query GetSeriesBySlug($slug: String!) {
+	mediaItems(
+		where: { slug: { eq: $slug }, type: { eq: "Series" } }
+	) {
+		edges {
+			node {
+				contentRating
+				dateAdded
+				directors
+				externalids {
+					imdb
+					tmdb
+					tvdb
+				}
+				genres
+				id
+				imageUrl
+				latestReleaseDate
+				plot
+				releaseDate
+				releases {
+					upc
+					isbn
+					asin
+					title
+					imageUrl
+					regionCode
+					locale
+					year
+					discs {
+						id
+						index
+						name
+						format
+						slug
+						titles {
+							id
+							index
+							comment
+							duration
+							displaySize
+							description
+							itemType
+							hasItem
+							item {
+								title
+								season
+								episode
+								type
+							}
+							sourceFile
+							season
+							episode
+							segmentMap
+							size
+						}
+					}
+				}
+				runtimeMinutes
+				slug
+				stars
+				tagline
+				title
+				type
+				writers
+				year
+			}
+		}
+	}
+}
+
+query GetAllBoxSets($first: Int, $after: String, $last: Int, $before: String, $where: BoxsetFilterInput, $order: [BoxsetSortInput!]) {
+	boxsets(
+		first: $first,
+		after: $after,
+		last: $last,
+		before: $before,
+		where: $where
+		order: $order
+	) {
+		edges {
+			node {
+				id
+				imageUrl
+				slug
+				sortTitle
+				title
+				type
+				release {
+					year
+				}
+			}
+		}
+		pageInfo {
+			endCursor
+			hasNextPage
+			hasPreviousPage
+			startCursor
+		}
+	}
+}
+
+query GetBoxSetBySlug($slug: String!) {
+	boxsets(
+		where: { slug: { eq: $slug } }
+	) {
+		edges {
+			node {
+				id
+				imageUrl
+				slug
+				sortTitle
+				title
+				type
+				release {
+					upc
+					isbn
+					asin
+					title
+					imageUrl
+					regionCode
+					locale
+					year
+					discs {
+						id
+						index
+						name
+						format
+						slug
+						titles {
+							id
+							index
+							comment
+							duration
+							displaySize
+							description
+							itemType
+							hasItem
+							item {
+								title
+								season
+								episode
+								type
+							}
+							sourceFile
+							season
+							episode
+							segmentMap
+							size
+						}
+					}
+				}
+			}
+		}
+	}
+}

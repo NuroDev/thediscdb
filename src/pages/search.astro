@@ -1,0 +1,171 @@
+---
+import { ChevronRight, Clapperboard, Layers, Tv } from 'lucide-astro';
+
+import Layout from '~/layouts/Layout.astro';
+import MediaCard from '~/components/MediaCard.astro';
+import { query } from '~/graphql';
+
+const searchQuery = Astro.url.searchParams.get('q') || '';
+if (!searchQuery.trim()) return Astro.redirect('/movies');
+
+const [moviesData, seriesData, boxsetsData] = await Promise.all([
+	query.GetAllMovies({
+		first: 12,
+		order: [{ latestReleaseDate: 'DESC' }],
+		where: {
+			title: { contains: searchQuery },
+			type: { eq: 'Movie' },
+		},
+	}),
+	query.GetAllSeries({
+		first: 12,
+		order: [{ latestReleaseDate: 'DESC' }],
+		where: {
+			title: { contains: searchQuery },
+			type: { eq: 'Series' },
+		},
+	}),
+	query.GetAllBoxSets({
+		first: 12,
+		order: [{ title: 'ASC' }],
+		where: {
+			title: { contains: searchQuery },
+		},
+	}),
+]);
+
+const movies = moviesData.mediaItems?.edges?.map((edge) => edge.node) ?? [];
+const series = seriesData.mediaItems?.edges?.map((edge) => edge.node) ?? [];
+const boxsets = boxsetsData.boxsets?.edges?.map((edge) => edge.node) ?? [];
+
+const moviesHasMore = moviesData.mediaItems?.pageInfo?.hasNextPage ?? false;
+const seriesHasMore = seriesData.mediaItems?.pageInfo?.hasNextPage ?? false;
+const boxsetsHasMore = boxsetsData.boxsets?.pageInfo?.hasNextPage ?? false;
+
+const totalResults = movies.length + series.length + boxsets.length;
+
+const description = `Search results for "${searchQuery}" across movies, TV series, and boxsets available on physical media`;
+
+Astro.response.headers.set('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=30');
+---
+
+<Layout
+	title={`Search: ${searchQuery} - TheDiscDB`}
+	description={description}
+>
+	<div class="max-w-7xl mx-auto">
+		<div class="mb-8">
+			<h1 class="text-2xl sm:text-3xl font-bold mb-2">
+				Search results for "{searchQuery}"
+			</h1>
+			<p class="text-zinc-600 dark:text-zinc-400">
+				Found {totalResults} {totalResults === 1 ? 'result' : 'results'}
+			</p>
+		</div>
+
+		{totalResults === 0 ? (
+			<div class="text-center py-12 text-zinc-600 dark:text-zinc-400">
+				<p class="text-lg mb-2">No results found</p>
+				<p class="text-sm">Try searching for something else</p>
+			</div>
+		) : (
+			<div class="space-y-12">
+				{movies.length > 0 && (
+					<section>
+						<div class="flex items-center justify-between mb-6">
+							<h2 class="inline-flex items-center gap-2 text-xl font-bold">
+								<Clapperboard size={24} />
+								<span>Movies ({movies.length}{moviesHasMore ? '+' : ''})</span>
+							</h2>
+							{moviesHasMore && (
+								<a
+									class="inline-flex items-center gap-1 text-sm font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 default-focus default-transition"
+									href={`/movies?q=${encodeURIComponent(searchQuery)}`}
+								>
+									<span>View all movies</span>
+									<ChevronRight size={16} />
+								</a>
+							)}
+						</div>
+						<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
+							{movies.map((movie) => (
+								<MediaCard
+									contentRating={movie.contentRating}
+									imageUrl={movie.imageUrl}
+									slug={movie.slug ?? ''}
+									title={movie.title ?? 'Untitled'}
+									type="movie"
+									year={movie.year}
+								/>
+							))}
+						</div>
+					</section>
+				)}
+
+				{series.length > 0 && (
+					<section>
+						<div class="flex items-center justify-between mb-6">
+							<h2 class="inline-flex items-center gap-2 text-xl font-bold">
+								<Tv size={24} />
+								<span>TV Series ({series.length}{seriesHasMore ? '+' : ''})</span>
+							</h2>
+							{seriesHasMore && (
+								<a
+									class="inline-flex items-center gap-1 text-sm font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 default-focus default-transition"
+									href={`/series?q=${encodeURIComponent(searchQuery)}`}
+								>
+									<span>View all series</span>
+									<ChevronRight size={16} />
+								</a>
+							)}
+						</div>
+						<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
+							{series.map((item) => (
+								<MediaCard
+									contentRating={item.contentRating}
+									imageUrl={item.imageUrl}
+									slug={item.slug ?? ''}
+									title={item.title ?? 'Untitled'}
+									type="series"
+									year={item.year}
+								/>
+							))}
+						</div>
+					</section>
+				)}
+
+				{boxsets.length > 0 && (
+					<section>
+						<div class="flex items-center justify-between mb-6">
+							<h2 class="inline-flex items-center gap-2 text-xl font-bold">
+								<Layers size={24} />
+								<span>Boxsets ({boxsets.length}{boxsetsHasMore ? '+' : ''})</span>
+							</h2>
+							{boxsetsHasMore && (
+								<a
+									class="inline-flex items-center gap-1 text-sm font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 default-focus default-transition"
+									href={`/boxsets?q=${encodeURIComponent(searchQuery)}`}
+								>
+									<span>View all boxsets</span>
+									<ChevronRight size={16} />
+								</a>
+							)}
+						</div>
+						<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
+							{boxsets.map((boxset) => (
+								<MediaCard
+									contentRating={null}
+									imageUrl={boxset.imageUrl}
+									slug={boxset.slug ?? ''}
+									title={boxset.title ?? 'Untitled'}
+									type="boxset"
+									year={boxset.release?.year}
+								/>
+							))}
+						</div>
+					</section>
+				)}
+			</div>
+		)}
+	</div>
+</Layout>

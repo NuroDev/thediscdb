@@ -1,0 +1,23 @@
+{
+	"extends": "astro/tsconfigs/strict",
+	"include": [".astro/types.d.ts", "**/*"],
+	"exclude": ["dist"],
+	"compilerOptions": {
+		/* Import path aliases */
+		"baseUrl": ".",
+		"paths": {
+			"~/*": ["src/*"]
+		},
+
+		/* Skip type checking all .d.ts files. */
+		"skipLibCheck": true,
+		"types": ["./worker-configuration.d.ts"],
+
+		/* Enable JSX support */
+		"jsx": "react-jsx",
+		"jsxImportSource": "preact",
+
+		/* Specify a set of bundled library declaration files that describe the target runtime environment. */
+		"lib": ["ESNext", "DOM"]
+	}
+}

@@ -1,0 +1,97 @@
+---
+import Layout from '~/layouts/Layout.astro';
+import MediaCard from '~/components/MediaCard.astro';
+import Pagination from '~/components/Pagination.astro';
+import SortControls from '~/components/SortControls.astro';
+import { query } from '~/graphql';
+
+const cursor = Astro.url.searchParams.get('cursor');
+const direction = Astro.url.searchParams.get('direction');
+const searchQuery = Astro.url.searchParams.get('q') || '';
+const sortBy = Astro.url.searchParams.get('sort') || 'releaseDate';
+const sortDirection = (Astro.url.searchParams.get('dir') || 'DESC') as 'ASC' | 'DESC';
+
+function getOrderBy(): Array<{
+	release?: {
+		dateAdded?: 'ASC' | 'DESC';
+		releaseDate?: 'ASC' | 'DESC'
+	};
+	sortTitle?: 'ASC' | 'DESC';
+}> {
+	switch (sortBy) {
+		case 'dateAdded':
+			return [{ release: { dateAdded: sortDirection } }];
+		case 'title':
+			return [{ sortTitle: sortDirection }];
+		case 'releaseDate':
+		default:
+			return [{ release: { releaseDate: sortDirection } }];
+	}
+};
+
+const { boxsets } = await query.GetAllBoxSets({
+	after: direction === 'next' ? cursor : undefined,
+	before: direction === 'prev' ? cursor : undefined,
+	first: direction === 'prev' ? undefined : 48,
+	last: direction === 'prev' ? 24 : undefined,
+	order: getOrderBy(),
+	where: searchQuery
+		? { title: { contains: searchQuery } }
+		: undefined,
+});
+
+const items = boxsets?.edges?.map(edge => edge.node) ?? [];
+const pageInfo = boxsets?.pageInfo;
+
+Astro.response.headers.set('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=30');
+---
+
+<Layout
+	title="Boxsets - TheDiscDB"
+	description="Browse the complete catalog of movie and TV boxsets available on physical media including Blu-ray, 4K UHD, and DVD"
+>
+	<div class="max-w-7xl mx-auto">
+		<SortControls
+			currentPath="/boxsets"
+			direction={sortDirection}
+			searchQuery={searchQuery}
+			sortBy={sortBy}
+			sortOptions={[
+				{ value: 'dateAdded', label: 'Date Added' },
+				{ value: 'releaseDate', label: 'Release Date' },
+				{ value: 'title', label: 'Title' },
+			]}
+		/>
+
+		{items.length === 0 ? (
+			<div class="text-center py-12 text-zinc-600 dark:text-zinc-400">
+				No boxsets found
+			</div>
+		) : (
+			<>
+				<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
+					{items.map((item) => (
+						<MediaCard
+							title={item.title ?? 'Untitled'}
+							slug={item.slug ?? ''}
+							imageUrl={item.imageUrl}
+							year={item.release?.year}
+							contentRating={null}
+							type="boxset"
+						/>
+					))}
+				</div>
+
+				{pageInfo && (
+					<Pagination
+						hasNextPage={pageInfo.hasNextPage}
+						hasPreviousPage={pageInfo.hasPreviousPage}
+						startCursor={pageInfo.startCursor}
+						endCursor={pageInfo.endCursor}
+						currentPath="/boxsets"
+					/>
+				)}
+			</>
+		)}
+	</div>
+</Layout>

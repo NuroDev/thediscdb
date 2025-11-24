@@ -1,0 +1,73 @@
+---
+import { ArrowLeft, ArrowRight } from 'lucide-astro';
+
+interface Props {
+	currentPath: string;
+	endCursor: string | null | undefined;
+	hasNextPage: boolean;
+	hasPreviousPage: boolean;
+	startCursor: string | null | undefined;
+}
+
+const {
+	currentPath,
+	endCursor,
+	hasNextPage,
+	hasPreviousPage,
+	startCursor,
+} = Astro.props;
+
+const getPaginationUrl = (cursor: string | null | undefined, direction: 'next' | 'prev'): string => {
+	if (!cursor) return '#';
+
+	const url = new URL(currentPath, Astro.url.origin);
+
+	const searchQuery = Astro.url.searchParams.get('q');
+	const sortBy = Astro.url.searchParams.get('sort');
+	const sortDirection = Astro.url.searchParams.get('dir');
+
+	if (searchQuery) url.searchParams.set('q', searchQuery);
+	if (sortBy) url.searchParams.set('sort', sortBy);
+	if (sortDirection) url.searchParams.set('dir', sortDirection);
+
+	url.searchParams.set('cursor', cursor);
+	url.searchParams.set('direction', direction);
+
+	return url.pathname + url.search;
+};
+---
+
+<div class="flex items-center justify-between mt-8 pt-8 border-t border-zinc-200 dark:border-zinc-800">
+	<div>
+		{hasPreviousPage && startCursor ? (
+			<a
+				class="flex items-center gap-2 px-2 sm:px-4 py-1.5 rounded-md default-focus default-transition border border-zinc-200 hover:border-zinc-300 dark:border-zinc-800 dark:hover:border-zinc-700 bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-900 dark:hover:bg-zinc-800 text-zinc-900 hover:text-zinc-800 dark:text-zinc-100 dark:hover:text-zinc-200"
+				href={getPaginationUrl(startCursor, 'prev')}
+			>
+				<ArrowLeft size={16} />
+				<span>Previous</span>
+			</a>
+		) : (
+			<span class="flex items-center gap-2 px-2 sm:px-4 py-1.5 text-zinc-300 dark:text-zinc-700 cursor-not-allowed">
+				<ArrowLeft size={16} />
+				<span>Previous</span>
+			</span>
+		)}
+	</div>
+	<div>
+		{hasNextPage && endCursor ? (
+			<a
+				class="flex items-center gap-2 px-2 sm:px-4 py-1.5 rounded-md default-focus default-transition border border-zinc-200 hover:border-zinc-300 dark:border-zinc-800 dark:hover:border-zinc-700 bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-900 dark:hover:bg-zinc-800 text-zinc-900 hover:text-zinc-800 dark:text-zinc-100 dark:hover:text-zinc-200"
+				href={getPaginationUrl(endCursor, 'next')}
+			>
+				<span>Next</span>
+				<ArrowRight size={16} />
+			</a>
+		) : (
+			<span class="flex items-center gap-2 px-2 sm:px-4 py-1.5 text-zinc-300 dark:text-zinc-700 cursor-not-allowed">
+				<span>Next</span>
+				<ArrowRight size={16} />
+			</span>
+		)}
+	</div>
+</div>

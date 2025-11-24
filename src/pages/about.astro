@@ -1,0 +1,152 @@
+---
+import {
+	CircleQuestionMark,
+	Database,
+	GitPullRequestArrow,
+	Info,
+ } from 'lucide-astro';
+
+import Layout from '~/layouts/Layout.astro';
+
+export const prerender = true;
+---
+
+<Layout
+	title="About - TheDiscDB"
+	description="Learn about TheDiscDB, a comprehensive catalog of physical movie disc contents including detailed information about movies, TV series, and box sets on Blu-ray, 4K UHD, and DVD"
+>
+	<div class="mx-auto max-w-3xl">
+		<h1 class="mb-8 text-4xl font-bold">About TheDiscDB</h1>
+
+		<div class="space-y-6 text-sm font-regular text-zinc-700 dark:text-zinc-400 leading-relaxed">
+			<section class="space-y-2">
+				<h2 class="inline-flex items-center gap-2 text-2xl font-semibold text-black dark:text-white">
+					<CircleQuestionMark />
+					<span>What is TheDiscDB?</span>
+				</h2>
+				<p>
+					TheDiscDB is a comprehensive catalog of physical movie disc contents.
+					It provides detailed information about movies, TV series, and box sets available on physical media formats like Blu-ray, 4K UHD, and DVD.
+				</p>
+			</section>
+
+			<hr class="border-zinc-200 dark:border-zinc-800" />
+
+			<section class="space-y-2">
+				<h2 class="inline-flex items-center gap-2 text-2xl font-semibold text-black dark:text-white">
+					<Info />
+					<span>About This Site</span>
+				</h2>
+
+				<p>
+					This is a custom frontend interface for
+					<a
+						class="rounded-md text-blue-500 hover:text-blue-600 dark:text-blue-600 dark:hover:text-blue-500 default-focus default-transition"
+						href="https://thediscdb.com/"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						the official TheDiscDB website,
+					</a>
+					designed to provide a fast, modern browsing experience.
+					Built with
+					<a
+						class="rounded-md text-blue-500 hover:text-blue-600 dark:text-blue-600 dark:hover:text-blue-500 default-focus default-transition"
+						href="https://astro.build/"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						Astro
+					</a>
+					and deployed to 
+					<a
+						class="rounded-md text-blue-500 hover:text-blue-600 dark:text-blue-600 dark:hover:text-blue-500 default-focus default-transition"
+						href="https://workers.cloudflare.com/"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						Cloudflare Workers,
+					</a>
+					this site delivers server-side rendered pages with smooth client-side navigation transitions.
+				</p>
+			</section>
+
+			<hr class="border-zinc-200 dark:border-zinc-800" />
+
+			<section class="space-y-2">
+				<h2 class="inline-flex items-center gap-2 text-2xl font-semibold text-black dark:text-white">
+					<Database />
+					<span>Data Source</span>
+				</h2>
+
+				<p>
+					All content data is sourced from 
+					<a
+						class="rounded-md text-blue-500 hover:text-blue-600 dark:text-blue-600 dark:hover:text-blue-500 default-focus default-transition"
+						href="https://thediscdb.com/graphql"
+						rel="noopener noreferrer"
+						target="_blank"
+					>
+						the official TheDiscDB GraphQL API.
+					</a>
+					This site is an independent frontend and is not officially affiliated with TheDiscDB.
+				</p>
+			</section>
+
+			<hr class="border-zinc-200 dark:border-zinc-800" />
+
+			<section class="space-y-2">
+				<h2 class="inline-flex items-center gap-2 text-2xl font-semibold text-black dark:text-white">
+					<GitPullRequestArrow />
+					<span>Open Source</span>
+				</h2>
+
+				<p>
+					This project is built with modern web technologies including
+					<a
+						class="rounded-md text-blue-500 hover:text-blue-600 dark:text-blue-600 dark:hover:text-blue-500 default-focus default-transition"
+						href="https://astro.build/"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						Astro,
+					</a>
+					<a
+						class="rounded-md text-blue-500 hover:text-blue-600 dark:text-blue-600 dark:hover:text-blue-500 default-focus default-transition"
+						href="https://typescriptlang.org/"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						TypeScript,
+					</a>
+					<a
+						class="rounded-md text-blue-500 hover:text-blue-600 dark:text-blue-600 dark:hover:text-blue-500 default-focus default-transition"
+						href="https://tailwindcss.com/"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						TailwindCSS,
+					</a>
+					 and 
+					<a
+						class="rounded-md text-blue-500 hover:text-blue-600 dark:text-blue-600 dark:hover:text-blue-500 default-focus default-transition"
+						href="https://graphql.org/"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						GraphQL.
+					</a>
+					You can find the public source code for this project at: 
+					<a
+						class="rounded-md text-blue-500 hover:text-blue-600 dark:text-blue-600 dark:hover:text-blue-500 default-focus default-transition"
+						href="https://github.com/nurodev/thediscdb"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						nurodev/thediscdb
+					</a>
+				</p>
+			</section>
+		</div>
+	</div>
+</Layout>

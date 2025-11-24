@@ -1,0 +1,57 @@
+---
+import { Image } from 'astro:assets';
+import { getImageUrl } from '~/utils/image';
+
+interface Props {
+	contentRating?: string | null;
+	imageUrl: string | null | undefined;
+	slug: string;
+	title: string;
+	type: 'movie' | 'series' | 'boxset';
+	year?: number | null;
+}
+
+const { title, slug, imageUrl, year, contentRating, type } = Astro.props;
+
+const href = `/${type === 'boxset' ? 'boxsets' : type === 'movie' ? 'movies' : 'series'}/${slug}`;
+const image = getImageUrl(imageUrl);
+---
+
+<a
+	class="group block border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 rounded-md overflow-hidden shadow-sm dark:shadow-none hover:scale-[1.02] default-focus default-transition"
+	href={href}
+>
+	<div class="aspect-2/3 image-container overflow-hidden">
+		{image ? (
+			<Image
+				alt={title}
+				class="w-full h-full object-cover"
+				height={600}
+				loading="lazy"
+				src={image}
+				transition:name={`poster-${slug}`}
+				width={400}
+			/>
+		) : (
+			<div class="w-full h-full flex items-center justify-center text-zinc-400">
+				No Image
+			</div>
+		)}
+	</div>
+
+	<div class="p-4 border-t border-zinc-200 dark:border-zinc-800">
+		<h3 class="font-semibold text-sm line-clamp-2 mb-1">
+			{title}
+		</h3>
+		
+		<div class="flex items-center gap-2 text-xs text-zinc-600 dark:text-zinc-400">
+			{year && <span>{year}</span>}
+			{contentRating && (
+				<>
+					{year && <span>•</span>}
+					<span>{contentRating}</span>
+				</>
+			)}
+		</div>
+	</div>
+</a>

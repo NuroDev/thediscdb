@@ -1,0 +1,135 @@
+---
+import { Image } from 'astro:assets';
+import { ChevronRight, Disc3 } from 'lucide-astro';
+
+import { DiscTitles } from '~/components/DiscTitles';
+import { getImageUrl } from '~/utils/image';
+import { query } from '~/graphql';
+import Layout from '~/layouts/Layout.astro';
+
+const { slug } = Astro.params;
+if (!slug) return Astro.redirect('/boxsets');
+
+const { boxsets } = await query.GetBoxSetBySlug({ slug });
+const boxset = boxsets?.edges?.[0]?.node;
+if (!boxset) return Astro.redirect('/boxsets');
+
+const image = getImageUrl(boxset.imageUrl);
+const release = boxset.release;
+
+const description = `View detailed information about the ${boxset.title ?? 'this boxset'} physical media collection including disc contents and specifications.`;
+
+Astro.response.headers.set('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=30');
+---
+
+<Layout
+	title={`${boxset.title ?? 'Boxset'} - TheDiscDB`}
+	description={description}
+>
+	<div class="max-w-7xl mx-auto">
+		<div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+			<!-- Poster -->
+			<div class="lg:col-span-1">
+				<div class="image-container rounded-md overflow-hidden sticky top-8">
+					{image ? (
+						<Image
+							alt={boxset.title ?? 'Boxset cover'}
+							class="w-full rounded-md border border-zinc-200 dark:border-zinc-800"
+							height={900}
+							src={image}
+							transition:name={`poster-${slug}`}
+							width={600}
+						/>
+					) : (
+						<div class="w-full aspect-2/3 flex items-center justify-center text-zinc-400">
+							No Image
+						</div>
+					)}
+				</div>
+			</div>
+
+			<!-- Details -->
+			<div class="lg:col-span-2">
+				<h1 class="text-4xl font-bold mb-4">{boxset.title}</h1>
+
+				<div class="flex flex-wrap gap-4 mb-6 text-sm">
+					{release?.year && (
+						<div class="px-3 py-1 bg-zinc-100 dark:bg-zinc-800 rounded">
+							{release.year}
+						</div>
+					)}
+					<div class="px-3 py-1 bg-zinc-100 dark:bg-zinc-800 rounded">
+						Boxset
+					</div>
+				</div>
+
+				{release && (
+					<div class="mb-6">
+						<h2 class="text-sm font-semibold text-zinc-600 dark:text-zinc-400 mb-2">RELEASE INFO</h2>
+						<div class="grid grid-cols-2 gap-4 text-sm">
+							{release.regionCode && (
+								<div>
+									<span class="text-zinc-600 dark:text-zinc-400">Region:</span> {release.regionCode}
+								</div>
+							)}
+							{release.locale && (
+								<div>
+									<span class="text-zinc-600 dark:text-zinc-400">Locale:</span> {release.locale}
+								</div>
+							)}
+							{release.upc && (
+								<div>
+									<span class="text-zinc-600 dark:text-zinc-400">UPC:</span> {release.upc}
+								</div>
+							)}
+							{release.isbn && (
+								<div>
+									<span class="text-zinc-600 dark:text-zinc-400">ISBN:</span> {release.isbn}
+								</div>
+							)}
+							{release.asin && (
+								<div>
+									<span class="text-zinc-600 dark:text-zinc-400">ASIN:</span> {release.asin}
+								</div>
+							)}
+						</div>
+					</div>
+				)}
+			</div>
+		</div>
+
+		<!-- Discs -->
+		{release?.discs && release.discs.length > 0 && (
+			<div class="mt-12">
+				<h2 class="inline-flex items-center gap-2 text-2xl font-bold mb-6">
+					<Disc3 />
+					<span>Discs</span>
+				</h2>
+				<div class="space-y-4">
+					{release.discs.map((disc) => (
+						<details class="bg-zinc-50 dark:bg-zinc-900 rounded group border border-zinc-200 dark:border-zinc-800">
+							<summary class="inline-flex items-center justify-between gap-2 w-full p-4  font-medium cursor-pointer hover:text-zinc-600 dark:hover:text-zinc-400 default-transition">
+								<div class="inline-flex items-center gap-2">
+									<ChevronRight class="w-4 h-4 default-transition group-open:rotate-90" />
+									<span>Disc {disc.index + 1}</span>
+									|
+									<span>{disc.name}</span>
+								</div>
+
+								<span class="inline-flex items-center rounded-md bg-blue-100 px-2 py-1 text-xs font-medium text-blue-700 dark:bg-blue-400/10 dark:text-blue-400">
+									{disc.format}
+								</span>
+							</summary>
+
+							{disc.titles && disc.titles.length > 0 && (
+								<div class="p-4">
+									<DiscTitles titles={disc.titles} type="boxset" client:load />
+								</div>
+							)}
+						</details>
+					))}
+				</div>
+			</div>
+		)}
+	</div>
+</Layout>
