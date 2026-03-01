@@ -120,7 +120,7 @@ export function GlobalSearch(): JSX.Element {
 			ref={searchRef}>
 			{/* Input */}
 			<div class='relative'>
-				<div class='-translate-y-1/2 pointer-events-none absolute top-1/2 left-3 text-zinc-400 dark:text-zinc-600'>
+				<div class='pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-zinc-400 dark:text-zinc-600'>
 					<Search class='h-5 w-5' />
 				</div>
 
@@ -137,7 +137,7 @@ export function GlobalSearch(): JSX.Element {
 				/>
 
 				{!searchValue && (
-					<div class='-translate-y-1/2 pointer-events-none absolute top-1/2 right-3 hidden sm:flex sm:items-center'>
+					<div class='pointer-events-none absolute top-1/2 right-3 hidden -translate-y-1/2 sm:flex sm:items-center'>
 						<kbd class='flex items-center justify-center rounded border border-zinc-300 bg-zinc-100 px-1.5 py-0.5 font-mono text-xs text-zinc-600 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-400'>
 							/
 						</kbd>
@@ -147,7 +147,7 @@ export function GlobalSearch(): JSX.Element {
 				{searchValue && (
 					<button
 						aria-label='Clear search'
-						class='-translate-y-1/2 default-transition default-focus absolute top-1/2 right-2 cursor-pointer rounded p-1 text-zinc-400 hover:text-zinc-600 dark:text-zinc-600 dark:hover:text-zinc-400'
+						class='default-transition default-focus absolute top-1/2 right-2 -translate-y-1/2 cursor-pointer rounded p-1 text-zinc-400 hover:text-zinc-600 dark:text-zinc-600 dark:hover:text-zinc-400'
 						onClick={handleClear}
 						type='button'>
 						<X class='h-5 w-5' />
@@ -169,13 +169,13 @@ export function GlobalSearch(): JSX.Element {
 									section.items.length > 0 ? (
 										<div key={section.type}>
 											<div
-												class={`sticky top-0 z-10 bg-zinc-100 px-4 py-2 font-semibold text-xs text-zinc-600 uppercase tracking-wider dark:bg-zinc-900 dark:text-zinc-400 ${index === 0 ? 'rounded-t-lg' : ''}`}>
+												class={`sticky top-0 z-10 bg-zinc-100 px-4 py-2 text-xs font-semibold tracking-wider text-zinc-600 uppercase dark:bg-zinc-900 dark:text-zinc-400 ${index === 0 ? 'rounded-t-lg' : ''}`}>
 												{section.type}s ({section.totalCount})
 											</div>
 											<div>
 												{section.items.map((item) => (
 													<a
-														class='default-transition default-focus flex items-center gap-3 border-zinc-100 border-b px-4 py-2 hover:bg-zinc-50 dark:border-zinc-900 dark:hover:bg-zinc-900/50'
+														class='default-transition default-focus flex items-center gap-3 border-b border-zinc-100 px-4 py-2 hover:bg-zinc-50 dark:border-zinc-900 dark:hover:bg-zinc-900/50'
 														href={`${section.path}/${item.slug}`}
 														key={item.id}
 														onClick={() => setIsOpen(false)}>
@@ -187,7 +187,7 @@ export function GlobalSearch(): JSX.Element {
 															/>
 														)}
 														<div class='min-w-0 flex-1'>
-															<div class='truncate font-medium text-sm text-zinc-900 dark:text-zinc-100'>
+															<div class='truncate text-sm font-medium text-zinc-900 dark:text-zinc-100'>
 																{item.title}
 															</div>
 															{item.year && (
@@ -204,9 +204,9 @@ export function GlobalSearch(): JSX.Element {
 								)}
 							</div>
 
-							<div class='border-zinc-200 border-t dark:border-zinc-800'>
+							<div class='border-t border-zinc-200 dark:border-zinc-800'>
 								<a
-									class='default-transition default-focus block rounded-b-lg px-4 py-3 text-center font-medium text-blue-600 text-sm hover:bg-zinc-50 dark:text-blue-400 dark:hover:bg-zinc-900/50'
+									class='default-transition default-focus block rounded-b-lg px-4 py-3 text-center text-sm font-medium text-blue-600 hover:bg-zinc-50 dark:text-blue-400 dark:hover:bg-zinc-900/50'
 									href={`/search?q=${encodeURIComponent(searchValue)}`}
 									onClick={() => setIsOpen(false)}>
 									View all {totalResults} results →

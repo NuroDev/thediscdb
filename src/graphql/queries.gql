@@ -1,9 +1,16 @@
-query GetAllMovies($first: Int, $after: String, $last: Int, $before: String, $where: MediaItemFilterInput, $order: [MediaItemSortInput!]) {
+query GetAllMovies(
+	$first: Int
+	$after: String
+	$last: Int
+	$before: String
+	$where: MediaItemFilterInput
+	$order: [MediaItemSortInput!]
+) {
 	mediaItems(
-		first: $first,
-		after: $after,
-		last: $last,
-		before: $before,
+		first: $first
+		after: $after
+		last: $last
+		before: $before
 		where: $where
 		order: $order
 	) {
@@ -36,12 +43,19 @@ query GetAllMovies($first: Int, $after: String, $last: Int, $before: String, $wh
 	}
 }
 
-query GetAllSeries($first: Int, $after: String, $last: Int, $before: String, $where: MediaItemFilterInput, $order: [MediaItemSortInput!]) {
+query GetAllSeries(
+	$first: Int
+	$after: String
+	$last: Int
+	$before: String
+	$where: MediaItemFilterInput
+	$order: [MediaItemSortInput!]
+) {
 	mediaItems(
-		first: $first,
-		after: $after,
-		last: $last,
-		before: $before,
+		first: $first
+		after: $after
+		last: $last
+		before: $before
 		where: $where
 		order: $order
 	) {
@@ -75,9 +89,7 @@ query GetAllSeries($first: Int, $after: String, $last: Int, $before: String, $wh
 }
 
 query GetMovieBySlug($slug: String!) {
-	mediaItems(
-		where: { slug: { eq: $slug }, type: { eq: "Movie" } }
-	) {
+	mediaItems(where: { slug: { eq: $slug }, type: { eq: "Movie" } }) {
 		edges {
 			node {
 				contentRating
@@ -146,9 +158,7 @@ query GetMovieBySlug($slug: String!) {
 }
 
 query GetSeriesBySlug($slug: String!) {
-	mediaItems(
-		where: { slug: { eq: $slug }, type: { eq: "Series" } }
-	) {
+	mediaItems(where: { slug: { eq: $slug }, type: { eq: "Series" } }) {
 		edges {
 			node {
 				contentRating
@@ -216,12 +226,19 @@ query GetSeriesBySlug($slug: String!) {
 	}
 }
 
-query GetAllBoxSets($first: Int, $after: String, $last: Int, $before: String, $where: BoxsetFilterInput, $order: [BoxsetSortInput!]) {
+query GetAllBoxSets(
+	$first: Int
+	$after: String
+	$last: Int
+	$before: String
+	$where: BoxsetFilterInput
+	$order: [BoxsetSortInput!]
+) {
 	boxsets(
-		first: $first,
-		after: $after,
-		last: $last,
-		before: $before,
+		first: $first
+		after: $after
+		last: $last
+		before: $before
 		where: $where
 		order: $order
 	) {
@@ -248,9 +265,7 @@ query GetAllBoxSets($first: Int, $after: String, $last: Int, $before: String, $w
 }
 
 query GetBoxSetBySlug($slug: String!) {
-	boxsets(
-		where: { slug: { eq: $slug } }
-	) {
+	boxsets(where: { slug: { eq: $slug } }) {
 		edges {
 			node {
 				id

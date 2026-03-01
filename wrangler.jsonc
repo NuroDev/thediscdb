@@ -6,21 +6,21 @@
 	"compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
 	"assets": {
 		"binding": "ASSETS",
-		"directory": "./dist"
+		"directory": "./dist",
 	},
 	"observability": {
 		"enabled": true,
 		"logs": {
-			"enabled": true
+			"enabled": true,
 		},
 		"traces": {
-			"enabled": true
-		}
+			"enabled": true,
+		},
 	},
 	"routes": [
 		{
 			"custom_domain": true,
-			"pattern": "thediscdb.nuro.dev"
-		}
-	]
+			"pattern": "thediscdb.nuro.dev",
+		},
+	],
 }

@@ -110,6 +110,7 @@ thediscdb/
 ### Pagination
 
 The site uses cursor-based pagination (not offset-based) for efficient data fetching:
+
 - 48 items per page
 - Bidirectional navigation (next/previous)
 - Cursor state maintained via URL query parameters
@@ -117,17 +118,20 @@ The site uses cursor-based pagination (not offset-based) for efficient data fetc
 ### Search
 
 **Global Search**:
+
 - Real-time search with 300ms debounce
 - Shows up to 3 results per content type
 - Full results available at `/search?q=query`
 
 **List Filtering**:
+
 - Each list page supports `?q=` parameter for filtering
 - Combined with sort options for flexible browsing
 
 ### View Transitions
 
 Smooth client-side navigation using Astro's View Transitions:
+
 - Cover art morphs between list and detail pages
 - Navigation bar persists across pages
 - Content slides in with custom animations

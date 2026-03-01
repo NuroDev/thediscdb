@@ -41,27 +41,29 @@ bun run cf-typegen       # Generate Cloudflare Workers types
 ### Data Flow
 
 1. **GraphQL Client** (`src/graphql/index.ts`):
-   - Singleton `GraphQLClient` instance
-   - Endpoint: `https://thediscdb.com/graphql/`
-   - Type-safe SDK generated from queries
+    - Singleton `GraphQLClient` instance
+    - Endpoint: `https://thediscdb.com/graphql/`
+    - Type-safe SDK generated from queries
 
 2. **Queries** (`src/graphql/queries.gql`):
-   - All GraphQL queries live here
-   - After editing, run `bun run codegen` to regenerate types
+    - All GraphQL queries live here
+    - After editing, run `bun run codegen` to regenerate types
 
 3. **Code Generation** (`codegen.config.ts`):
-   - Schema fetched from: `https://raw.githubusercontent.com/TheDiscDb/data/refs/heads/main/tools/ImportBuddy/source/ImportBuddy/TheDiscDb.Client/schema.graphql`
-   - Generates: `src/graphql/sdk.gen.ts`
-   - Uses `graphql-request` plugin for type-safe queries
+    - Schema fetched from: `https://raw.githubusercontent.com/TheDiscDb/data/refs/heads/main/tools/ImportBuddy/source/ImportBuddy/TheDiscDb.Client/schema.graphql`
+    - Generates: `src/graphql/sdk.gen.ts`
+    - Uses `graphql-request` plugin for type-safe queries
 
 ### Pagination Strategy
 
 **GraphQL Cursor-Based Pagination**:
+
 - Forward: `first: 24` + `after: cursor` (Next button)
 - Backward: `last: 24` + `before: cursor` (Previous button)
 - Page size: 24 items
 
 **Critical Implementation Detail**:
+
 ```typescript
 // ✅ Correct bidirectional pagination
 {
@@ -100,13 +102,14 @@ The site features a global search that searches across all content types:
 - **Dropdown Results**: Shows up to 3 results per type (Movies, Series, BoxSets) as you type
 - **Search Results Page**: `/search?q=query` shows 12 results per type with pagination links
 - **Implementation**:
-  - `GlobalSearch.tsx`: Preact component with debounced search (300ms)
-  - `/api/search`: Server-side API endpoint that queries all content types in parallel
-  - Server-side GraphQL search using `contains` filter on title field
+    - `GlobalSearch.tsx`: Preact component with debounced search (300ms)
+    - `/api/search`: Server-side API endpoint that queries all content types in parallel
+    - Server-side GraphQL search using `contains` filter on title field
 
 ### List Page Features
 
 All list pages (`/movies`, `/series`, `/boxsets`) support:
+
 - **Sort**: Latest Release (default), Date Added, Release Date, Title
 - **Pagination**: Cursor-based with 24 items/page
 - **Search via URL**: Can be filtered via `?q=query` parameter (used by "View all" links from global search)
@@ -116,16 +119,19 @@ Query params: `?q=search&sort=latestReleaseDate&cursor=...&direction=next`
 ### Image Handling
 
 Images from the API are relative URLs. Use `getImageUrl()` utility (`src/utils/image.ts`) to convert them to absolute URLs:
+
 ```typescript
-getImageUrl('/path/to/image.jpg')  // → 'https://thediscdb.com/images/path/to/image.jpg'
+getImageUrl('/path/to/image.jpg'); // → 'https://thediscdb.com/images/path/to/image.jpg'
 ```
 
 **Image Optimization**: The project uses Astro's `Image` component for automatic optimization:
+
 - Remote images from `thediscdb.com` are allowed via `image.remotePatterns` in `astro.config.ts`
 - Images are optimized at build time with `imageService: 'compile'`
 - The `MediaCard` component uses `<Image>` with appropriate dimensions (400x600 for 2:3 aspect ratio)
 
 When adding new image components, import and use `Image` from `astro:assets`:
+
 ```astro
 ---
 import { Image } from 'astro:assets';
@@ -155,11 +161,13 @@ The site uses Astro's View Transitions API for smooth client-side navigation:
 - **Cover art morphs** between list and detail pages using `transition:name="poster-${slug}"`
 
 **How it works:**
+
 1. When navigating from a movie list to a movie detail page, the poster image smoothly transitions from its position in the grid to the larger detail view
 2. The same `transition:name` (e.g., `poster-the-matrix`) is used on both the `MediaCard` and detail page images
 3. Navigation and main layout persist, only content animates
 
 **Adding transitions to new elements:**
+
 ```astro
 <!-- Named transition for morphing -->
 <img transition:name="unique-id" ... />
@@ -176,11 +184,12 @@ The site uses Astro's View Transitions API for smooth client-side navigation:
 - **Framework**: TailwindCSS v4 (via `@tailwindcss/vite`)
 - **Utility**: `cn()` function (`src/utils/cn.ts`) for conditional class merging
 - **Custom utilities** in `src/styles/global.css`:
-  - `default-focus`: Standard focus ring styles
-  - `default-transition`: 300ms ease-in-out transition
-  - `dark`: Custom dark mode variant using `prefers-color-scheme`
+    - `default-focus`: Standard focus ring styles
+    - `default-transition`: 300ms ease-in-out transition
+    - `dark`: Custom dark mode variant using `prefers-color-scheme`
 
 **Example usage**:
+
 ```astro
 <div class="default-transition hover:scale-[1.02]">
   <button class="default-focus">Click me</button>
@@ -190,9 +199,11 @@ The site uses Astro's View Transitions API for smooth client-side navigation:
 ## Component Architecture
 
 ### Layouts
+
 - `src/layouts/Layout.astro`: Base layout with Navigation and main wrapper
 
 ### Reusable Components
+
 - `Navigation.astro`: Top nav bar with active state and global search
 - `GlobalSearch.tsx`: Preact component for global search with dropdown results
 - `MediaCard.astro`: Card for movies/series/boxsets (used in list pages)
@@ -200,6 +211,7 @@ The site uses Astro's View Transitions API for smooth client-side navigation:
 - `SortControls.astro`: Sort dropdown with direction toggle
 
 ### Page Components
+
 List pages and detail pages fetch data directly in their frontmatter using the GraphQL client:
 
 ```typescript
@@ -230,6 +242,7 @@ Edit `SortControls.astro` to add new sort options, ensuring the field exists in 
 ### Adding a New Page Type
 
 If adding a new content type beyond movies/series/boxsets:
+
 1. Add GraphQL queries (list + detail)
 2. Create `/src/pages/[type]/index.astro` (list)
 3. Create `/src/pages/[type]/[slug].astro` (detail)
@@ -239,6 +252,7 @@ If adding a new content type beyond movies/series/boxsets:
 ## Future Enhancements
 
 The project is prepared for but does not currently implement:
+
 - **ISR Caching**: Can be added using `Astro.response.headers.set('Cache-Control', ...)` in page frontmatter
 - **FlexSearch**: For client-side fuzzy search (currently uses GraphQL `contains` filter)
 - **Preact Components**: Integration is configured but not yet used for interactive features
@@ -246,6 +260,6 @@ The project is prepared for but does not currently implement:
 ## Notes
 
 - TypeScript strict mode is enabled
-- Biome handles all linting and formatting (not Prettier/ESLint)
+- Oxfmt handles formatting and Oxlint handles linting (not Biome/Prettier/ESLint)
 - Images use aspect ratio utilities (e.g., `aspect-2/3` for posters)
 - Dark mode is system preference-based (no toggle)

@@ -62,7 +62,7 @@ export function DiscTitles({ titles, type }: DiscTitlesProps): JSX.Element {
 				<div class='overflow-x-auto'>
 					<table class='w-full text-sm'>
 						<thead>
-							<tr class='border-zinc-200 border-b text-left dark:border-zinc-800'>
+							<tr class='border-b border-zinc-200 text-left dark:border-zinc-800'>
 								<th class='min-w-32 pb-2'>Source File</th>
 								<th class='pb-2'>Description</th>
 								<th class='w-20 pb-2'>Type</th>
@@ -81,7 +81,7 @@ export function DiscTitles({ titles, type }: DiscTitlesProps): JSX.Element {
 						<tbody>
 							{filteredTitles.map((title) => (
 								<tr
-									class='border-zinc-100 border-b dark:border-zinc-900'
+									class='border-b border-zinc-100 dark:border-zinc-900'
 									key={title.id}>
 									<td
 										class='max-w-xs truncate py-2 text-xs'
