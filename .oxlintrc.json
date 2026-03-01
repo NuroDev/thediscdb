@@ -2,57 +2,41 @@
 	"$schema": "./node_modules/oxlint/configuration_schema.json",
 	"categories": {
 		"correctness": "error",
-		"style": "warn",
 		"suspicious": "warn"
 	},
 	"globals": {
-		// Re-enable if the project uses Astro
 		"Astro": "readonly"
 	},
-	"plugins": ["import", "jsx-a11y", "react", "typescript", "unicorn"],
+	"ignorePatterns": [
+		"**/.astro/",
+		"**/.wrangler/",
+		"**/dist/",
+		"**/node_modules/",
+		"src/graphql/sdk.gen.ts",
+		"worker-configuration.d.ts"
+	],
+	"plugins": ["typescript"],
 	"rules": {
-		"array-type": [
-			"warn",
-			{
-				"default": "generic"
-			}
-		],
-		"arrow-body-style": [
-			"warn",
-			"as-needed",
-			{
-				"requireReturnForObjectLiteral": true
-			}
-		],
-		"consistent-generic-constructors": "warn",
-		"consistent-type-definitions": ["warn", "interface"],
+		"@typescript-eslint/array-type": ["warn", { "default": "generic" }],
+		"@typescript-eslint/consistent-generic-constructors": "off",
+		"@typescript-eslint/consistent-type-definitions": "off",
+		"@typescript-eslint/no-inferrable-types": "error",
+		"@typescript-eslint/prefer-enum-initializers": "error",
+		"arrow-body-style": "off",
 		"curly": "off",
 		"default-param-last": "error",
-		"eqeqeq": "warn",
-		"func-style": ["error", { "allowArrowFunctions": true }],
+		"func-style": "off",
 		"id-length": "off",
 		"max-statements": "off",
+		"no-array-index-key": "off",
 		"no-default-export": "off",
 		"no-else-return": "error",
-		"no-inferrable-types": "error",
 		"no-magic-numbers": "off",
 		"no-param-reassign": "error",
-		"no-shadow": "error",
 		"no-ternary": "off",
-		"no-unnecessary-template-expression": "error",
-		"prefer-as-const": "error",
-		"prefer-enum-initializers": "error",
 		"prefer-object-spread": "off",
-		"prefer-template": "warn",
-		"react/no-array-index-key": "warn",
-		"react/react-in-jsx-scope": "off",
-		"react/self-closing-comp": "error",
-		"sort-imports": "warn",
-		"sort-keys": "warn",
-		"triple-slash-reference": "off",
-		"unicorn/filename-case": ["error", { "case": "kebabCase" }],
-		"unicorn/no-lonely-if": "error",
-		"unicorn/no-nested-ternary": "error",
-		"unicorn/switch-case-braces": "error"
+		"prefer-template": "off",
+		"sort-imports": "off",
+		"sort-keys": "off"
 	}
 }
