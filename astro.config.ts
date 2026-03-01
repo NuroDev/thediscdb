@@ -1,5 +1,5 @@
 import cloudflare from '@astrojs/cloudflare';
-import react from '@astrojs/react';
+import preact from '@astrojs/preact';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'astro/config';
 
@@ -19,7 +19,7 @@ export default defineConfig({
 			},
 		],
 	},
-	integrations: [react()],
+	integrations: [preact({ compat: true })],
 	output: 'server',
 	redirects: {
 		'/': {
