@@ -5,7 +5,6 @@
 		"style": "warn",
 		"suspicious": "warn"
 	},
-	"ignorePatterns": ["src/graphql/sdk.gen.ts"],
 	"globals": {
 		// Re-enable if the project uses Astro
 		"Astro": "readonly"
@@ -30,7 +29,7 @@
 		"curly": "off",
 		"default-param-last": "error",
 		"eqeqeq": "warn",
-		"func-style": ["error", "declaration", { "allowArrowFunctions": true }],
+		"func-style": ["error", { "allowArrowFunctions": true }],
 		"id-length": "off",
 		"max-statements": "off",
 		"no-default-export": "off",
