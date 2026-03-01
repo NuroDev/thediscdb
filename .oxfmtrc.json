@@ -6,11 +6,11 @@
 	"endOfLine": "lf",
 	"ignorePatterns": [
 		".astro/**/*",
-		".wrangler/**/*",
+		".wrangler/",
 		"bun.lock",
 		"dist/**/*",
 		"node_modules/**/*",
-		"src/graphql/sdk.gen.ts",
+		"pnpm-lock.yaml",
 		"worker-configuration.d.ts"
 	],
 	"jsxSingleQuote": true,
@@ -19,11 +19,20 @@
 	"singleAttributePerLine": true,
 	"singleQuote": true,
 	"sortImports": {
-		"internalPattern": ["~/*"]
+		"groups": [
+			"builtin",
+			"external",
+			["internal", "subpath"],
+			["parent", "sibling", "index"],
+			"unknown"
+		],
+		"internalPattern": ["~/*", "@/*"],
+		"newlinesBetween": true,
+		"order": "asc"
 	},
+	"sortPackageJson": true,
 	"sortTailwindcss": {
-		"attributes": ["class", "className"],
-		"functions": ["clsx", "cn"]
+		"functions": ["clsx", "cn", "cva", "tw"]
 	},
 	"tabWidth": 4,
 	"trailingComma": "all",
