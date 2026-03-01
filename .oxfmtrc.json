@@ -1,0 +1,31 @@
+{
+	"$schema": "./node_modules/oxfmt/configuration_schema.json",
+	"arrowParens": "always",
+	"bracketSameLine": true,
+	"bracketSpacing": true,
+	"endOfLine": "lf",
+	"ignorePatterns": [
+		".astro/**/*",
+		".wrangler/**/*",
+		"bun.lock",
+		"dist/**/*",
+		"node_modules/**/*",
+		"src/graphql/sdk.gen.ts",
+		"worker-configuration.d.ts"
+	],
+	"jsxSingleQuote": true,
+	"printWidth": 90,
+	"semi": true,
+	"singleAttributePerLine": true,
+	"singleQuote": true,
+	"sortImports": {
+		"internalPattern": ["~/*"]
+	},
+	"sortTailwindcss": {
+		"attributes": ["class", "className"],
+		"functions": ["clsx", "cn"]
+	},
+	"tabWidth": 4,
+	"trailingComma": "all",
+	"useTabs": true
+}

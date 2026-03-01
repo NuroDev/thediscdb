@@ -18,9 +18,9 @@ bun run build            # Build for production
 bun run preview          # Preview production build with Wrangler
 
 # Code Quality
-bun run check            # Run Biome checks (lint + format)
-bun run lint             # Lint with Biome
-bun run format           # Format with Biome
+bun run check            # Run Oxfmt format check + Oxlint
+bun run lint             # Lint with Oxlint (with --fix)
+bun run format           # Format with Oxfmt
 
 # Code Generation
 bun run codegen          # Regenerate TypeScript types from GraphQL schema

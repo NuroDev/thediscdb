@@ -6,11 +6,11 @@
 		"astro": "astro",
 		"build": "astro build",
 		"cf-typegen": "wrangler types",
-		"check": "biome check",
+		"check": "oxfmt --check . && oxlint",
 		"codegen": "graphql-codegen --config codegen.config.ts",
 		"dev": "astro dev",
-		"format": "biome format --write .",
-		"lint": "biome lint --write .",
+		"format": "oxfmt --write .",
+		"lint": "oxlint --fix",
 		"preview": "wrangler dev"
 	},
 	"dependencies": {
@@ -28,11 +28,12 @@
 		"tailwindcss": "^4.2.1"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.3.3",
 		"@graphql-codegen/cli": "^6.1.2",
 		"@graphql-codegen/typescript": "^5.0.8",
 		"@graphql-codegen/typescript-graphql-request": "^6.4.0",
 		"@graphql-codegen/typescript-operations": "^5.0.8",
+		"oxfmt": "^0.35.0",
+		"oxlint": "^1.50.0",
 		"typescript": "^5.9.3",
 		"wrangler": "^4.69.0"
 	}

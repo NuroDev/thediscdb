@@ -1,0 +1,42 @@
+{
+	"$schema": "./node_modules/oxlint/configuration_schema.json",
+	"categories": {
+		"correctness": "error",
+		"suspicious": "warn"
+	},
+	"globals": {
+		"Astro": "readonly"
+	},
+	"ignorePatterns": [
+		"**/.astro/",
+		"**/.wrangler/",
+		"**/dist/",
+		"**/node_modules/",
+		"src/graphql/sdk.gen.ts",
+		"worker-configuration.d.ts"
+	],
+	"plugins": ["typescript"],
+	"rules": {
+		"@typescript-eslint/array-type": ["warn", { "default": "generic" }],
+		"@typescript-eslint/consistent-generic-constructors": "off",
+		"@typescript-eslint/consistent-type-definitions": "off",
+		"@typescript-eslint/no-inferrable-types": "error",
+		"@typescript-eslint/prefer-enum-initializers": "error",
+		"arrow-body-style": "off",
+		"curly": "off",
+		"default-param-last": "error",
+		"func-style": "off",
+		"id-length": "off",
+		"max-statements": "off",
+		"no-array-index-key": "off",
+		"no-default-export": "off",
+		"no-else-return": "error",
+		"no-magic-numbers": "off",
+		"no-param-reassign": "error",
+		"no-ternary": "off",
+		"prefer-object-spread": "off",
+		"prefer-template": "off",
+		"sort-imports": "off",
+		"sort-keys": "off"
+	}
+}
