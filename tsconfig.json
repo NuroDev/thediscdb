@@ -15,7 +15,7 @@
 
 		/* Enable JSX support */
 		"jsx": "react-jsx",
-		"jsxImportSource": "preact",
+		"jsxImportSource": "react",
 
 		/* Specify a set of bundled library declaration files that describe the target runtime environment. */
 		"lib": ["ESNext", "DOM"]
