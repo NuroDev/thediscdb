@@ -37,9 +37,16 @@ const isActive = (href: string) => currentPath.startsWith(href);
 							<a
 								class={cn(
 							"inline-flex items-center justify-center gap-1.5 sm:gap-2 px-2 sm:px-4 py-1.5 text-sm border rounded-md default-transition default-focus",
-									active
-										? "border-zinc-200 hover:border-zinc-300 dark:border-zinc-800 dark:hover:border-zinc-700 bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-900 dark:hover:bg-zinc-800 text-zinc-900 hover:text-zinc-800 dark:text-zinc-100 dark:hover:text-zinc-200"
-										: "border-transparent hover:border-zinc-200 dark:hover:border-zinc-800 text-zinc-600 hover:text-zinc-800 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-900 dark:hover:text-white"
+									{
+										"border-zinc-200 hover:border-zinc-300 dark:border-zinc-800 dark:hover:border-zinc-700": active,
+										"bg-zinc-100 hover:bg-zinc-200 focus:bg-zinc-200 dark:bg-zinc-900 dark:hover:bg-zinc-800 dark:focus:bg-zinc-800": active,
+										"text-zinc-900 hover:text-zinc-800 dark:text-zinc-100 dark:hover:text-zinc-200": active,
+									},
+									{
+										"border-transparent hover:border-zinc-200 focus:border-zinc-200 dark:hover:border-zinc-800 dark:focus:border-zinc-800": !active,
+										"hover:bg-zinc-100 focus:bg-zinc-100 dark:hover:bg-zinc-900 dark:focus:bg-zinc-900": !active,
+										"text-zinc-600 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-white dark:focus:text-white": !active,
+									},
 								)}
 								href={item.href}
 							>
