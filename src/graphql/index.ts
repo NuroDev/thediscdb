@@ -51,8 +51,6 @@ const client = new GraphQLClient(GRAPHQL_ENDPOINT);
 export const query = getSdk(
 	client,
 	async (action, operationName, _operationType, variables) => {
-		console.log('caches', caches);
-
 		let cache: Cache | null = null;
 		if (typeof caches !== 'undefined') {
 			cache = (caches as unknown as { default: Cache }).default;
