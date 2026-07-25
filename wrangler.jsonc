@@ -2,8 +2,11 @@
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"main": "@astrojs/cloudflare/entrypoints/server",
 	"name": "thediscdb",
-	"compatibility_date": "2025-11-09",
+	"compatibility_date": "2026-07-01",
 	"compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+	"cache": {
+		"enabled": true,
+	},
 	"assets": {
 		"binding": "ASSETS",
 		"directory": "./dist",
