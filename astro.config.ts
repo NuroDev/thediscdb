@@ -7,7 +7,10 @@ import { defineConfig } from 'astro/config';
 // https://astro.build/config
 export default defineConfig({
 	adapter: cloudflare({
-		imageService: 'compile',
+		imageService: {
+			build: 'compile',
+			runtime: 'cloudflare-binding',
+		},
 	}),
 	cache: {
 		provider: cacheCloudflare(),
