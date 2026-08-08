@@ -2,7 +2,6 @@
 	"name": "thediscdb",
 	"private": true,
 	"scripts": {
-		"astro": "astro",
 		"build": "astro build",
 		"cf-typegen": "wrangler types",
 		"check": "oxfmt --check . && oxlint",
@@ -10,7 +9,7 @@
 		"dev": "astro dev",
 		"format": "oxfmt --write .",
 		"lint": "oxlint --fix",
-		"preview": "wrangler dev"
+		"preview": "astro preview"
 	},
 	"dependencies": {
 		"@astrojs/cloudflare": "^14.1.4",
