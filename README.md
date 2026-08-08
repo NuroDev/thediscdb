@@ -26,12 +26,13 @@
 - **Styling**: [TailwindCSS v4](https://tailwindcss.com/)
 - **Data**: [GraphQL](https://graphql.org/) with [graphql-request](https://github.com/jasonkuhrt/graphql-request)
 - **Interactivity**: [Preact](https://preactjs.com/)
-- **Package Manager**: [Bun](https://bun.sh/)
+- **Package Manager**: [pnpm](https://pnpm.io/)
 - **Code Quality**: [Biome](https://biomejs.dev/)
 
 ## Prerequisites
 
-- [Bun](https://bun.sh/) v1.3.2 or later
+- [Node.js](https://nodejs.org/) v22.13 or later
+- [pnpm](https://pnpm.io/) v11.20.0 or later
 
 ## Installation
 
@@ -41,31 +42,31 @@ git clone <repository-url>
 cd thediscdb
 
 # Install dependencies
-bun install
+pnpm install
 
 # Generate TypeScript types from GraphQL schema
-bun run codegen
+pnpm codegen
 
 # Start development server
-bun run dev
+pnpm dev
 ```
 
 ## Development Commands
 
 ```bash
 # Development
-bun run dev              # Start dev server at http://localhost:4321
-bun run build            # Build for production
-bun run preview          # Preview production build with Wrangler
+pnpm dev                  # Start dev server at http://localhost:4321
+pnpm build                # Build for production
+pnpm preview              # Preview production build with Wrangler
 
 # Code Quality
-bun run check            # Run Biome checks (lint + format)
-bun run lint             # Lint with Biome
-bun run format           # Format with Biome
+pnpm check                # Run Oxfmt and Oxlint checks
+pnpm lint                 # Lint with Oxlint
+pnpm format               # Format with Oxfmt
 
 # Code Generation
-bun run codegen          # Regenerate TypeScript types from GraphQL schema
-bun run cf-typegen       # Generate Cloudflare Workers types
+pnpm codegen              # Regenerate TypeScript types from GraphQL schema
+pnpm cf-typegen           # Generate Cloudflare Workers types
 ```
 
 ## Project Structure
@@ -103,7 +104,7 @@ thediscdb/
 ### Data Flow
 
 1. GraphQL queries are defined in `src/graphql/queries.gql`
-2. Running `bun run codegen` generates a type-safe SDK
+2. Running `pnpm codegen` generates a type-safe SDK
 3. Pages fetch data server-side using the SDK
 4. Astro renders pages on Cloudflare Workers edge network
 
@@ -142,7 +143,7 @@ The project is configured for [Cloudflare Workers](https://workers.cloudflare.co
 
 ```bash
 # Build for production
-bun run build
+pnpm build
 
 # Deploy to Cloudflare Workers
 wrangler deploy
@@ -153,7 +154,7 @@ Ensure you have a `wrangler.jsonc` configured with your Cloudflare account detai
 ## Adding GraphQL Queries
 
 1. Add your query to `src/graphql/queries.gql`
-2. Run `bun run codegen` to regenerate types
+2. Run `pnpm codegen` to regenerate types
 3. Import and use: `import { query } from '~/graphql'`
 4. Call in your page: `await query.YourNewQuery({ ... })`
 

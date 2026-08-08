@@ -7,27 +7,27 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 This is a custom frontend for TheDiscDB (https://thediscdb.com/), a catalog of physical movie disc contents. The project uses Astro with SSR (Server-Side Rendering) deployed to Cloudflare Workers, consuming data from the official TheDiscDB GraphQL API.
 
 **Deployment Target**: Cloudflare Workers
-**Package Manager**: Bun (v1.3.2)
+**Package Manager**: pnpm (v11.20.0)
 
 ## Development Commands
 
 ```bash
 # Development
-bun run dev              # Start dev server
-bun run build            # Build for production
-bun run preview          # Preview production build with Wrangler
+pnpm dev                 # Start dev server
+pnpm build               # Build for production
+pnpm preview             # Preview production build with Wrangler
 
 # Code Quality
-bun run check            # Run Oxfmt format check + Oxlint
-bun run lint             # Lint with Oxlint (with --fix)
-bun run format           # Format with Oxfmt
+pnpm check               # Run Oxfmt format check + Oxlint
+pnpm lint                # Lint with Oxlint (with --fix)
+pnpm format              # Format with Oxfmt
 
 # Code Generation
-bun run codegen          # Regenerate TypeScript types from GraphQL schema
-bun run cf-typegen       # Generate Cloudflare Workers types
+pnpm codegen             # Regenerate TypeScript types from GraphQL schema
+pnpm cf-typegen          # Generate Cloudflare Workers types
 ```
 
-**Important**: After modifying `src/graphql/queries.gql`, always run `bun run codegen` to regenerate the TypeScript SDK.
+**Important**: After modifying `src/graphql/queries.gql`, always run `pnpm codegen` to regenerate the TypeScript SDK.
 
 ## Architecture
 
@@ -47,7 +47,7 @@ bun run cf-typegen       # Generate Cloudflare Workers types
 
 2. **Queries** (`src/graphql/queries.gql`):
     - All GraphQL queries live here
-    - After editing, run `bun run codegen` to regenerate types
+    - After editing, run `pnpm codegen` to regenerate types
 
 3. **Code Generation** (`codegen.config.ts`):
     - Schema fetched from: `https://raw.githubusercontent.com/TheDiscDb/data/refs/heads/main/tools/ImportBuddy/source/ImportBuddy/TheDiscDb.Client/schema.graphql`
@@ -231,7 +231,7 @@ const { mediaItems } = await query.GetAllMovies({
 ### Adding a New GraphQL Query
 
 1. Add query to `src/graphql/queries.gql`
-2. Run `bun run codegen`
+2. Run `pnpm codegen`
 3. Import and use: `import { query } from '~/graphql'`
 4. Call: `await query.YourNewQuery({ ... })`
 
