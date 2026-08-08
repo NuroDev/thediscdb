@@ -4,12 +4,16 @@
 	"name": "thediscdb",
 	"compatibility_date": "2026-07-01",
 	"compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
-	"cache": {
-		"enabled": true,
-	},
+
 	"assets": {
 		"binding": "ASSETS",
 		"directory": "./dist",
+	},
+	"cache": {
+		"enabled": true,
+	},
+	"images": {
+		"binding": "IMAGES",
 	},
 	"observability": {
 		"enabled": true,
