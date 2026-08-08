@@ -42,6 +42,7 @@ export default defineConfig({
 		'/series': { maxAge: 300, swr: 60, tags: ['series'] },
 		'/series/[slug]': { maxAge: 600, swr: 300, tags: ['series'] },
 	},
+	session: false,
 	vite: {
 		plugins: [tailwindcss()],
 	},
