@@ -20,7 +20,6 @@ const description = movie.plot
 	? movie.plot.substring(0, 155) + (movie.plot.length > 155 ? '...' : '')
 	: `View detailed information about ${movie.title ?? 'this movie'} including physical releases, disc contents, and specifications.`;
 
-Astro.response.headers.set('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=30');
 ---
 
 <Layout

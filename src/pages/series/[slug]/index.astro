@@ -20,7 +20,6 @@ const description = series.plot
 	? series.plot.substring(0, 155) + (series.plot.length > 155 ? '...' : '')
 	: `View detailed information about ${series.title ?? 'this series'} including physical releases, disc contents, and specifications.`;
 
-Astro.response.headers.set('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=30');
 ---
 
 <Layout

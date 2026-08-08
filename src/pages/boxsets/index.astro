@@ -43,7 +43,6 @@ const { boxsets } = await query.GetAllBoxSets({
 const items = boxsets?.edges?.map(edge => edge.node) ?? [];
 const pageInfo = boxsets?.pageInfo;
 
-Astro.response.headers.set('Cache-Control', 'public, s-maxage=60, stale-while-revalidate=30');
 ---
 
 <Layout
