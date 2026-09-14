@@ -16,7 +16,7 @@
 		"@astrojs/preact": "^6.0.1",
 		"@base-ui/react": "^1.2.0",
 		"@tailwindcss/vite": "^4.2.1",
-		"astro": "^7.2.0",
+		"astro": "^7.2.8",
 		"clsx": "^2.1.1",
 		"graphql": "^16.13.0",
 		"graphql-request": "^7.4.0",
