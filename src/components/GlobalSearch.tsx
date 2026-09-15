@@ -23,11 +23,11 @@ interface SearchableItem extends MediaItem {
 	path: string;
 }
 
-interface SearchGroup {
+type SearchGroup = {
 	items: Array<SearchableItem>;
 	totalCount: number;
 	value: string;
-}
+};
 
 export function GlobalSearch(): React.JSX.Element {
 	const debounceTimer = useRef<ReturnType<typeof setTimeout>>(undefined);

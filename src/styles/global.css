@@ -3,7 +3,7 @@
 @custom-variant dark (@media (prefers-color-scheme: dark));
 
 @utility default-focus {
-	@apply focus:outline-hidden focus:ring-3 focus:ring-blue-500 dark:focus:ring-blue-600 focus:ring-offset-2 dark:focus:ring-offset-zinc-950;
+	@apply focus:ring-3 focus:ring-blue-500 focus:ring-offset-2 focus:outline-hidden dark:focus:ring-blue-600 dark:focus:ring-offset-zinc-950;
 }
 
 @utility default-transition {
@@ -14,7 +14,7 @@
 	@apply relative;
 
 	&::before {
-		@apply content-[''] absolute inset-0 bg-zinc-200 dark:bg-zinc-800 animate-pulse z-0;
+		@apply absolute inset-0 z-0 animate-pulse bg-zinc-200 content-[''] dark:bg-zinc-800;
 	}
 
 	& > img {

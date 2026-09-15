@@ -4,9 +4,8 @@
 	"exclude": ["dist"],
 	"compilerOptions": {
 		/* Import path aliases */
-		"baseUrl": ".",
 		"paths": {
-			"~/*": ["src/*"]
+			"~/*": ["./src/*"]
 		},
 
 		/* Skip type checking all .d.ts files. */
