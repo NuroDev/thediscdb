@@ -35,6 +35,8 @@ port. There is currently no automated test script. Do not report tests as passin
 
 - `astro.config.ts` configures SSR, Cloudflare, Preact compatibility, Tailwind,
   remote images, and the `/` to `/movies` redirect.
+- `src/worker.ts` is the custom Cloudflare Worker entrypoint. Keep Astro requests
+  routed through `@astrojs/cloudflare/handler`.
 - `src/pages/` contains route handlers and Astro pages. Pages fetch their data in
   server-side frontmatter.
 - `src/graphql/index.ts` owns the `graphql-request` client and Cloudflare Cache API
