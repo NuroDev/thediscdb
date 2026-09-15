@@ -60,9 +60,6 @@ importers:
       '@graphql-codegen/cli':
         specifier: ^7.4.1
         version: 7.4.1(@types/node@26.5.1)(crossws@0.3.5)(graphql@17.0.2)(supports-color@10.2.2)(typescript@7.0.2)
-      '@graphql-codegen/typescript':
-        specifier: ^6.1.0
-        version: 6.1.0(graphql@17.0.2)
       '@graphql-codegen/typescript-graphql-request':
         specifier: ^7.1.0
         version: 7.1.0(graphql-request@7.4.0(graphql@17.0.2))(graphql-tag@2.12.7(graphql@17.0.2))(graphql@17.0.2)

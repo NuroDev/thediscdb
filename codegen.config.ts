@@ -9,14 +9,10 @@ export default {
 				skipTypename: false,
 				useTypeImports: true,
 			},
-			plugins: [
-				'typescript',
-				'typescript-graphql-request',
-				'typescript-operations',
-			],
+			plugins: ['typescript-operations', 'typescript-graphql-request'],
 		},
 	},
 	documents: ['src/graphql/queries.gql'],
 	ignoreNoDocuments: true,
-	schema: 'https://raw.githubusercontent.com/TheDiscDb/data/refs/heads/main/tools/ImportBuddy/source/ImportBuddy/TheDiscDb.Client/schema.graphql',
+	schema: 'https://thediscdb.com/graphql/',
 } satisfies CodegenConfig;
