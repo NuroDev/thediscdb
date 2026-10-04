@@ -7,7 +7,7 @@ export default defineConfig(({ isPreview }) => ({
 		cache: {
 			enabled: true,
 		},
-		compatibilityDate: '2026-08-04',
+		compatibilityDate: '2026-10-04',
 		compatibilityFlags: ['nodejs_compat', 'global_fetch_strictly_public'],
 		domains: isPreview ? [] : [`${WORKER_NAME}.nuro.dev`],
 		entrypoint: './src/worker.ts',
