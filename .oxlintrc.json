@@ -9,11 +9,11 @@
 	},
 	"ignorePatterns": [
 		"**/.astro/",
+		"**/.cloudflare/",
 		"**/.wrangler/",
 		"**/dist/",
 		"**/node_modules/",
-		"src/graphql/sdk.gen.ts",
-		"worker-configuration.d.ts"
+		"src/graphql/sdk.gen.ts"
 	],
 	"plugins": ["typescript"],
 	"rules": {

@@ -31,8 +31,12 @@
 
 ## Prerequisites
 
-- [Node.js](https://nodejs.org/) v22.13 or later
+- [Node.js](https://nodejs.org/) v22.18 or later
 - [pnpm](https://pnpm.io/) v11.20.0 or later
+- Global [Cloudflare CLI](https://developers.cloudflare.com/cf/), installed with
+  `pnpm add --global cf`, for account commands such as `cf auth login`
+
+Project scripts use the locally installed Astro and `cf` versions.
 
 ## Installation
 
@@ -42,7 +46,10 @@ git clone <repository-url>
 cd thediscdb
 
 # Install dependencies
-pnpm install
+pnpm install --frozen-lockfile
+
+# Generate Cloudflare binding and runtime types
+pnpm cf-typegen
 
 # Generate TypeScript types from GraphQL schema
 pnpm codegen
@@ -56,8 +63,9 @@ pnpm dev
 ```bash
 # Development
 pnpm dev                  # Start dev server at http://localhost:4321
-pnpm build                # Build for production
-pnpm preview              # Preview production build with Wrangler
+pnpm build                # Build for production with Astro
+pnpm deploy               # Deploy the existing production build with cf
+pnpm preview              # Preview production build with Cloudflare workerd
 
 # Code Quality
 pnpm check                # Run Oxfmt and Oxlint checks
@@ -96,7 +104,7 @@ thediscdb/
 │   └── utils/               # Utility functions
 ├── astro.config.ts          # Astro configuration
 ├── codegen.config.ts        # GraphQL Code Generator config
-└── wrangler.jsonc           # Cloudflare Workers config
+└── cloudflare.config.ts     # Cloudflare Workers config
 ```
 
 ## How It Works
@@ -146,10 +154,18 @@ The project is configured for [Cloudflare Workers](https://workers.cloudflare.co
 pnpm build
 
 # Deploy to Cloudflare Workers
-wrangler deploy
+pnpm deploy
 ```
 
-Ensure you have a `wrangler.jsonc` configured with your Cloudflare account details.
+The project uses the `cf` CLI, Astro 7.4 beta, and `@astrojs/cloudflare` v15 beta.
+Worker settings live in `cloudflare.config.ts`, including the custom domain,
+bindings, and observability. Build output and generated types live in the ignored
+`.cloudflare/` directory.
+
+Sign in with `cf auth login` before deploying, or set
+`CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` in CI. `cf` does not reuse a
+Wrangler login. For Workers Builds, use `pnpm build` as the build command and
+`pnpm deploy` as the deploy command.
 
 ## Adding GraphQL Queries
 

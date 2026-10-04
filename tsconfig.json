@@ -1,7 +1,7 @@
 {
 	"extends": "astro/tsconfigs/strict",
-	"include": [".astro/types.d.ts", "**/*"],
-	"exclude": ["dist"],
+	"include": [".astro/types.d.ts", ".cloudflare/types/**/*.d.ts", "**/*"],
+	"exclude": [".cloudflare/output", "dist"],
 	"compilerOptions": {
 		/* Import path aliases */
 		"paths": {
@@ -10,7 +10,7 @@
 
 		/* Skip type checking all .d.ts files. */
 		"skipLibCheck": true,
-		"types": ["./worker-configuration.d.ts"],
+		"types": ["./.cloudflare/types/index.d.ts"],
 
 		/* Enable JSX support */
 		"jsx": "react-jsx",

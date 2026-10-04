@@ -6,12 +6,12 @@
 	"endOfLine": "lf",
 	"ignorePatterns": [
 		".astro/**/*",
+		".cloudflare/**/*",
 		".wrangler/**/*",
 		"dist/**/*",
 		"node_modules/**/*",
 		"pnpm-lock.yaml",
-		"src/graphql/sdk.gen.ts",
-		"worker-configuration.d.ts"
+		"src/graphql/sdk.gen.ts"
 	],
 	"jsxSingleQuote": true,
 	"printWidth": 90,

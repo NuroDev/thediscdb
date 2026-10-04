@@ -1,22 +1,24 @@
 {
 	"name": "thediscdb",
 	"private": true,
+	"type": "module",
 	"scripts": {
 		"build": "astro build",
-		"cf-typegen": "wrangler types",
+		"cf-typegen": "cf workers types",
 		"check": "oxfmt --check . && oxlint",
 		"codegen": "graphql-codegen --config codegen.config.ts",
+		"deploy": "cf deploy --prebuilt",
 		"dev": "astro dev",
 		"format": "oxfmt --write .",
 		"lint": "oxlint --fix",
 		"preview": "astro preview"
 	},
 	"dependencies": {
-		"@astrojs/cloudflare": "^14.3.1",
+		"@astrojs/cloudflare": "15.0.0-beta.1",
 		"@astrojs/preact": "^6.0.5",
 		"@base-ui/react": "^1.8.0",
 		"@tailwindcss/vite": "^4.3.3",
-		"astro": "^7.3.2",
+		"astro": "7.4.0-beta.1",
 		"clsx": "^2.1.1",
 		"graphql": "^17.0.2",
 		"graphql-request": "^7.4.0",
@@ -35,10 +37,10 @@
 		"@graphql-codegen/typescript-operations": "^6.1.6",
 		"@types/react": "^19.3.0",
 		"@types/react-dom": "^19.3.0",
+		"cf": "1.0.0-beta.12",
 		"oxfmt": "^0.68.0",
 		"oxlint": "^1.83.0",
-		"typescript": "^7.0.2",
-		"wrangler": "^4.131.2"
+		"typescript": "^7.0.2"
 	},
 	"packageManager": "pnpm@11.20.0"
 }

@@ -9,12 +9,15 @@ Cloudflare Workers and uses Tailwind CSS for styling. Interactive components use
 React through the Astro Preact integration's compatibility mode.
 
 - Runtime target: Cloudflare Workers
-- Framework: Astro with `output: 'server'`
+- Framework: Astro 7.4 beta with `output: 'server'`
+- Cloudflare tooling: `cf` CLI with `@astrojs/cloudflare` v15 beta
 - Package manager: pnpm 11.20.0
-- Minimum Node.js version: 22.13
+- Minimum Node.js version: 22.18
 - TypeScript: strict mode
 
 Use pnpm exclusively. Do not add Bun or npm lockfiles.
+Use global `cf` for account commands such as `cf auth login`. Project scripts use
+the locally installed Astro and `cf` versions.
 
 ## Commands
 
@@ -22,19 +25,28 @@ Use pnpm exclusively. Do not add Bun or npm lockfiles.
 pnpm install --frozen-lockfile  # Reproduce the dependency tree
 pnpm dev                        # Start the Astro development server
 pnpm check                      # Check formatting, then lint
-pnpm build                      # Build the production Worker
-pnpm preview                    # Preview with Wrangler
+pnpm build                      # Build the production Worker with Astro
+pnpm deploy                     # Deploy the existing build with cf
+pnpm preview                    # Preview with the Cloudflare workerd runtime
 pnpm codegen                    # Regenerate the GraphQL SDK
 pnpm cf-typegen                 # Regenerate Cloudflare binding types
 ```
 
-The Cloudflare build may need permission to bind a temporary local inspector
-port. There is currently no automated test script. Do not report tests as passing.
+Cloudflare builds and type generation may need permission to bind temporary local
+runtime ports. There is currently no automated test script. Do not report tests as
+passing.
 
 ## Architecture
 
 - `astro.config.ts` configures SSR, Cloudflare, Preact compatibility, Tailwind,
   remote images, and the `/` to `/movies` redirect.
+- `cloudflare.config.ts` owns the Worker entrypoint, bindings, custom domain,
+  compatibility settings, caching, and observability. Do not add Wrangler config.
+- Astro's Cloudflare adapter writes deployable output to
+  `.cloudflare/output/`. Build before running `pnpm deploy` or `pnpm preview`.
+- Cloudflare binding and runtime types are generated in
+  `.cloudflare/types/index.d.ts` by dev, build, or `pnpm cf-typegen`. Regenerate
+  them before typechecking a fresh checkout. Never edit generated types manually.
 - `src/worker.ts` is the custom Cloudflare Worker entrypoint. Keep Astro requests
   routed through `@astrojs/cloudflare/handler`.
 - `src/pages/` contains route handlers and Astro pages. Pages fetch their data in
