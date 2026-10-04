@@ -18,6 +18,9 @@ export default defineConfig(({ isPreview }) => ({
 		name: WORKER_NAME,
 		observability: {
 			enabled: true,
+			issues: {
+				enabled: true,
+			},
 			logs: {
 				enabled: true,
 			},
