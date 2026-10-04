@@ -12,7 +12,7 @@ React through the Astro Preact integration's compatibility mode.
 - Framework: Astro 7.4 beta with `output: 'server'`
 - Cloudflare tooling: `cf` CLI with `@astrojs/cloudflare` v15 beta
 - Package manager: pnpm 11.20.0
-- Minimum Node.js version: 22.18
+- Minimum Node.js version: 24.21.0 LTS, pinned in `.node-version`
 - TypeScript: strict mode
 
 Use pnpm exclusively. Do not add Bun or npm lockfiles.

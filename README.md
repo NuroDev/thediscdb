@@ -31,7 +31,7 @@
 
 ## Prerequisites
 
-- [Node.js](https://nodejs.org/) v22.18 or later
+- [Node.js](https://nodejs.org/) v24.21.0 LTS or later, pinned in `.node-version`
 - [pnpm](https://pnpm.io/) v11.20.0 or later
 - Global [Cloudflare CLI](https://developers.cloudflare.com/cf/), installed with
   `pnpm add --global cf`, for account commands such as `cf auth login`
