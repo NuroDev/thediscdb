@@ -65,6 +65,7 @@ pnpm dev
 pnpm dev                  # Start dev server at http://localhost:4321
 pnpm build                # Build for production with Astro
 pnpm deploy               # Deploy the existing production build with cf
+pnpm deploy:preview       # Build and deploy a branch Worker Preview
 pnpm preview              # Preview production build with Cloudflare workerd
 
 # Code Quality
@@ -166,6 +167,21 @@ Sign in with `cf auth login` before deploying, or set
 `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` in CI. `cf` does not reuse a
 Wrangler login. For Workers Builds, use `pnpm build` as the build command and
 `pnpm deploy` as the deploy command.
+
+### Workers Previews
+
+Deploy the production configuration once with `pnpm build && pnpm deploy` to
+enable Preview URLs. Then build and deploy a branch Preview:
+
+```bash
+pnpm deploy:preview                # Use the current Git or CI branch name
+pnpm deploy:preview my-feature     # Use an explicit Preview name
+```
+
+The command builds with Preview settings and returns its URLs. Previews use
+`workers.dev`, without the production custom domain. Rebuild with `pnpm build`
+before deploying to production again. `pnpm preview` remains the local preview
+command. See [Cloudflare Workers Previews](https://developers.cloudflare.com/cf/projects/#deploy-a-preview).
 
 ## Adding GraphQL Queries
 

@@ -2,14 +2,14 @@ import { bindings, defineConfig } from 'cf/config';
 
 const WORKER_NAME = 'thediscdb';
 
-export default defineConfig({
+export default defineConfig(({ isPreview }) => ({
 	worker: {
 		cache: {
 			enabled: true,
 		},
 		compatibilityDate: '2026-08-04',
 		compatibilityFlags: ['nodejs_compat', 'global_fetch_strictly_public'],
-		domains: [`${WORKER_NAME}.nuro.dev`],
+		domains: isPreview ? [] : [`${WORKER_NAME}.nuro.dev`],
 		entrypoint: './src/worker.ts',
 		env: {
 			ASSETS: bindings.assets(),
@@ -25,5 +25,6 @@ export default defineConfig({
 				enabled: true,
 			},
 		},
+		previewUrls: true,
 	},
-});
+}));

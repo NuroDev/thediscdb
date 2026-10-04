@@ -8,6 +8,7 @@
 		"check": "oxfmt --check . && oxlint",
 		"codegen": "graphql-codegen --config codegen.config.ts",
 		"deploy": "cf deploy --prebuilt",
+		"deploy:preview": "cf previews deploy",
 		"dev": "astro dev",
 		"format": "oxfmt --write .",
 		"lint": "oxlint --fix",

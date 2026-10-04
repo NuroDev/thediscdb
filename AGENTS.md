@@ -27,6 +27,7 @@ pnpm dev                        # Start the Astro development server
 pnpm check                      # Check formatting, then lint
 pnpm build                      # Build the production Worker with Astro
 pnpm deploy                     # Deploy the existing build with cf
+pnpm deploy:preview             # Build and deploy a branch Worker Preview
 pnpm preview                    # Preview with the Cloudflare workerd runtime
 pnpm codegen                    # Regenerate the GraphQL SDK
 pnpm cf-typegen                 # Regenerate Cloudflare binding types
@@ -44,6 +45,10 @@ passing.
   compatibility settings, caching, and observability. Do not add Wrangler config.
 - Astro's Cloudflare adapter writes deployable output to
   `.cloudflare/output/`. Build before running `pnpm deploy` or `pnpm preview`.
+- `pnpm deploy:preview` builds with `isPreview: true` and deploys to a branch
+  Preview on `workers.dev`, without the production custom domain. It accepts an
+  optional Preview name. Rebuild with `pnpm build` before deploying to production
+  after a Preview build.
 - Cloudflare binding and runtime types are generated in
   `.cloudflare/types/index.d.ts` by dev, build, or `pnpm cf-typegen`. Regenerate
   them before typechecking a fresh checkout. Never edit generated types manually.
